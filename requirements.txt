@@ -1,0 +1,6 @@
+tensorflow
+pyyaml
+scikit-learn
+matplotlib
+pandas
+dvc[gdrive]
