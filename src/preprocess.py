@@ -1,3 +1,5 @@
+# TODO: try different validation split
+
 import os
 import numpy as np
 import yaml
