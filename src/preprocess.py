@@ -11,8 +11,10 @@ with open("params.yaml") as f:
 train = np.load("data/raw/train.npz")
 test = np.load("data/raw/test.npz")
 
-x_train = train["x"].astype("float32") / 255.0
-x_test = test["x"].astype("float32") / 255.0
+raw_train = train["x"].astype("float32") / 255.0
+mean, std = raw_train.mean(), raw_train.std()
+x_train = (raw_train - mean) / std
+x_test = (test["x"].astype("float32") / 255.0 - mean) / std
 
 x_tr, x_val, y_tr, y_val = train_test_split(
     x_train, train["y"],
