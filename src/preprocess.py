@@ -11,10 +11,12 @@ with open("params.yaml") as f:
 train = np.load("data/raw/train.npz")
 test = np.load("data/raw/test.npz")
 
-raw_train = train["x"].astype("float32") / 255.0
-mean, std = raw_train.mean(), raw_train.std()
-x_train = (raw_train - mean) / std
-x_test = (test["x"].astype("float32") / 255.0 - mean) / std
+# [-1, 1] scaling (teammate), then standardize with train statistics (main)
+x_train = (train["x"].astype("float32") - 127.5) / 127.5
+x_test = (test["x"].astype("float32") - 127.5) / 127.5
+mean, std = x_train.mean(), x_train.std()
+x_train = (x_train - mean) / std
+x_test = (x_test - mean) / std
 
 x_tr, x_val, y_tr, y_val = train_test_split(
     x_train, train["y"],
